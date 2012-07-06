@@ -4,7 +4,7 @@ class KAL_Kind implements KAL_KindInterface {
     private $name;
     private $config;
     private $filters;
-    private $filterNames = array();
+    private $filterNames;
     private $specialFields;
 
     private $conn;
@@ -13,6 +13,7 @@ class KAL_Kind implements KAL_KindInterface {
         $this->name = $kind_name;
         $this->config = $config;
         $this->filters = array();
+        $this->filterNames = array();
     }
 
     public function getName() {
