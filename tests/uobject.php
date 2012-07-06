@@ -7,7 +7,7 @@
 CREATE TABLE motv_user_info_0 (
   user_id bigint(20) NOT NULL DEFAULT 0 COMMENT 'SPLIT KEY', -- 用户ID
   site_id int NOT NULL DEFAULT 0,                       -- 用来登陆的站点
-  PRIMARY KEY (id)
+  PRIMARY KEY (site_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  */
 
