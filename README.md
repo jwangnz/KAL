@@ -23,3 +23,9 @@ $user_id = 123;
 $row = $handle->findOne($user_id);
 ```
 ## 更多例子可以查看 tests/　下的脚本
+
+## 目前问题
+- findMuli尚未实现
+- 测试不全
+- IDGen生成后，不方便拿到生成的ID
+
