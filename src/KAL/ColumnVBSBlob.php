@@ -13,17 +13,17 @@ class KAL_ColumnVBSBlob implements KAL_ColumnConverterInterface {
     }
 
     public function encode($value) {
-        $newValue = array();
-        foreach ($values as $key => $value) {
+        $new_value = array();
+        foreach ($value as $key => $val) {
             if (isset($this->map[$key])) {
-                $newValue[$this->map[$key]] = $value;
+                $new_value[$this->map[$key]] = $val;
             }
         }
-        return vbs_encode($newValue);
+        return vbs_encode($new_value);
     }
 
     public function decode($value) {
-        $newValue = array();
+        $new_value = array();
 
         $used = 0;
         $value = vbs_decode($value, $used);
@@ -32,9 +32,9 @@ class KAL_ColumnVBSBlob implements KAL_ColumnConverterInterface {
         }
         foreach ($value as $key => $value) {
             if (isset($this->reverseMap[$key])) {
-                $newValue[$this->reverseMap[$key]] = $value;
+                $new_value[$this->reverseMap[$key]] = $value;
             }
         }
-        return $newValue;
+        return $new_value;
     }
 }

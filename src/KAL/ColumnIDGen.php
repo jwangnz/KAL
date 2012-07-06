@@ -1,6 +1,6 @@
 <?php
 
-class KAL_ColumnIDGen implements KAL_ColumnGeneraterInterface {
+class KAL_ColumnIDGen implements KAL_ColumnGeneratorInterface {
     const ID_LONG = "long";
     const ID_TIME = "time";
     const ID_MYSQL = "mysql";
@@ -19,8 +19,8 @@ class KAL_ColumnIDGen implements KAL_ColumnGeneraterInterface {
             if (!isset($options["kind"])) {
                 throw new InvalidArgumentException('idgenerator kind name needed in argument 2');
             }
-            if (!$options["idgen"]) {
-                $options["idgen"] = "";
+            if (!$options["idman"]) {
+                $options["idman"] = "";
             }
         }
         $this->options = $options;
@@ -33,12 +33,12 @@ class KAL_ColumnIDGen implements KAL_ColumnGeneraterInterface {
                 $value = 0;
                 break;
             case self::ID_LONG:
-                $dkxi_id = new DKXI_ID::factory($this->options["idgen"]);
-                $value = $dkxi_id->newId($this->options["name"]);
+                $dkxi_id = DKXI_ID::factory($this->options["idman"]);
+                $value = $dkxi_id->newId($this->options["kind"]);
                 break;
             case self::ID_TIME:
-                $dkxi_id = new DKXI_ID::factory($this->options["idgen"]);
-                $value = $dkxi_id->newTimeId($this->options["name"]);
+                $dkxi_id = DKXI_ID::factory($this->options["idman"]);
+                $value = $dkxi_id->newTimeId($this->options["kind"]);
                 break;
             default:
                 break;
