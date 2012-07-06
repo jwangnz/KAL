@@ -16,9 +16,9 @@ class KAL_Factory {
         $this->kindClassRefl = $refl;
     }
 
-    public static function init(KAL_ConfigLoaderInterface $loader, $kindClass = "KAL_Kind") {
+    public static function init(KAL_ConfigLoaderInterface $loader, $kind_class = "KAL_Kind") {
         if (! self::$instance) {
-            self::$instance = new KAL_Factory($loader, $kindClass);
+            self::$instance = new KAL_Factory($loader, $kind_class);
         }
         return self::$instance;
     }

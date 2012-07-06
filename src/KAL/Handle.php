@@ -188,9 +188,11 @@ class KAL_Handle implements KAL_HandleInterface {
         }
         if ($result != false) {
             $result = $this->convertResult($result);
-            foreach ($result as $row) {
-                foreach ($this->getFilters() as $filter) {
-                    $filter->afterFindOne($pairs, $row);
+            if (empty($fields)) {
+                foreach ($result as $row) {
+                    foreach ($this->getFilters() as $filter) {
+                        $filter->afterFindOne($row->toArray(), $row);
+                    }
                 }
             }
         }

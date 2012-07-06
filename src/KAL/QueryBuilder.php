@@ -31,13 +31,11 @@ class KAL_QueryBuilder {
 
     public static function buildUpdate($kind_name, array $update, array $change, $pattern, array $values) {
         $set = array();
-        foreach ($update as $field => $value)
-        {
+        foreach ($update as $field => $value) {
             $set[] = self::buildSQL("%C = %ns", array($field, $value));
         }
 
-        foreach ($change as $field => $value)
-        {
+        foreach ($change as $field => $value) {
             $set[] = self::buildSQL($value > 0 ? "%C = %C + %nd" : "%C = %C - %nd",
                 array($field, $field, abs($value)));
         }

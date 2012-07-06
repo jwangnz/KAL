@@ -28,7 +28,7 @@ class KAL_Kind implements KAL_KindInterface {
     }
 
     public function getConn() {
-        if ( !$this->conn) {
+        if (!$this->conn) {
             $tag = $this->config["dbman"] ? $this->config["dbman"] : "";
             $this->conn = DKXI_Database::factory($tag);
         }

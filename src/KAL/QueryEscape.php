@@ -1,19 +1,15 @@
 <?php
 
-class KAL_QueryEscape
-{
-    public function escapeString($string)
-    {
+class KAL_QueryEscape {
+    public function escapeString($string) {
         return mysql_escape_string($string);
     }
 
-    public function escapeColumnName($string)
-    {
+    public function escapeColumnName($string) {
         return '`'.str_replace('`', '``', $string).'`';
     }
 
-    public function escapeMultilineComment($string)
-    {
+    public function escapeMultilineComment($string) {
         // These can either terminate a comment, confuse the hell out of the parser,
         // make MySQL execute the comment as a query, or, in the case of semicolon,
         // are quasi-dangerous because the semicolon could turn a broken query into
@@ -38,8 +34,7 @@ class KAL_QueryEscape
         return '/* '.$comment.' */';
     }
 
-    public function escapeStringForLikeClause($string)
-    {
+    public function escapeStringForLikeClause($string) {
         $value = addcslashes($value, '\%_');
         $value = $this->escapeString($value);
         return $value;
