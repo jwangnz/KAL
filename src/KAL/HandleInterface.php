@@ -24,5 +24,7 @@ interface KAL_HandleInterface {
     public function update(array $update, array $change, $pattern/*, $args ... */);
 
     public function delete($pattern/*, $args ... */);
+
+    public function getLastIDGen($field_name);
 }
 

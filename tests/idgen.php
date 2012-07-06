@@ -20,8 +20,9 @@ $kind->getConfig()->set("special_fields", array(
     "user_id" =>$field,
 ));
 
-$result = $kind->getHandle()->insertOne(array(
+$handle = $kind->getHandle();
+$result = $handle->insertOne(array(
     "site_id" => 0,
 ));
-var_dump($result);
 
+var_dump($handle->getLastIDGen("user_id"));

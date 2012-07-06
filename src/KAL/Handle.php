@@ -6,11 +6,14 @@ class KAL_Handle implements KAL_HandleInterface {
     private $cacheTime;
     private $forceMaster;
 
+    private $lastIDGen;
+
     public function __construct(KAL_Kind $kind, $hint_id = null, $cache_time = null) {
         $this->kind = $kind;
         $this->hintID = (int) $hint_id;
         $this->cacheTime = (int) $cache_time;
         $this->forceMaster = false;
+        $this->lastIDGen = array();
     }
 
     public function getHintID() {
@@ -134,10 +137,11 @@ class KAL_Handle implements KAL_HandleInterface {
 
     public function insertOne(array $pairs) {
         $special_fields = $this->kind->getSpecialFields();
+        $idgen = array();
         foreach ($special_fields as $field_name => $handle) {
             if (!isset($pairs[$field_name])) {
                 if ($handle instanceof KAL_ColumnGeneratorInterface) {
-                    $pairs[$field_name] = $handle->generate();
+                    $idgen[$field_name] = $pairs[$field_name] = $handle->generate();
                 }
             } else if ($handle instanceof KAL_ColumnConverterInterface) {
                 $pairs[$field_name] = $handle->encode($pairs[$field_name]);
@@ -157,6 +161,11 @@ class KAL_Handle implements KAL_HandleInterface {
         $conn = $this->kind->getConn();
 
         $result = $conn->queryMaster($hint_id, $query);
+        if ($result->affectedRowNum()) {
+            $this->lastIDGen = $idgen;
+        } else {
+            $this->lastIDGen = array();
+        }
 
         // 过滤
         foreach ($this->getFilters() as $filter) {
@@ -225,6 +234,13 @@ class KAL_Handle implements KAL_HandleInterface {
         $conn = $this->kind->getConn();
         $result = $conn->queryMaster($this->getHintID(), $query);
         return $result;
+    }
+
+    public function getLastIDGen($field_name) {
+        if (isset($this->lastIDGen[$field_name])) {
+            return $this->lastIDGen[$field_name];
+        }
+        return null;
     }
 
     private function determineHintID($pairs) {
