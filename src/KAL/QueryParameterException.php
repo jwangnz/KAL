@@ -14,5 +14,5 @@ class KAL_QueryParameterException extends Exception {
 
 }
 
-?>
+
 

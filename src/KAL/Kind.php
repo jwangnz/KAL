@@ -59,7 +59,7 @@ class KAL_Kind implements KAL_KindInterface {
                 if (is_array($filter)) {
                     list($class_name, $parameters) = $filter;
                     if (isset($this->filterNames[$class_name])) {
-                        throw new Exception('filter "'.$name.'" is used');
+                        throw new Exception('filter "'.$class_name.'" is used');
                     }
                     $refl = new ReflectionClass($class_name);
                     $filter = $refl->newInstanceArgs($parameters);
