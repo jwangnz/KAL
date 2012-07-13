@@ -132,7 +132,14 @@ class KAL_Handle implements KAL_HandleInterface {
     }
 
     public function findMulti(array $pairs_list) {
+        foreach ($this->getFilters() as $filter) {
+            $result = $filter->findMulti($pairs_list);
+            if ($result) {
+                return $result;
+            }
+        }
 
+        throw new LogicException('"findMulti" does not handled by any filters');
     }
 
     public function insertOne(array $pairs) {
@@ -257,14 +264,14 @@ class KAL_Handle implements KAL_HandleInterface {
         }
     }
 
-    private function convertResult(DKXI_Database_FRResult $result) {
+    private function convertResult(ArrayAccess $result) {
         foreach ($result as $ii => $row) {
             $result[$ii] = $this->convertRow($row);
         }
         return $result;
     }
 
-    private function convertRow(DKXI_FRResult_Row $row) {
+    private function convertRow(ArrayAccess $row) {
         $special_fields = $this->kind->getSpecialFields();
         foreach ($special_fields as $field_name => $handle) {
             if ($handle instanceof KAL_ColumnConverterInterface) {

@@ -75,6 +75,12 @@ class KAL_UObjectFilter implements KAL_FilterInterface {
         // }
     }
 
+    public function findMulti(array $pairs_list) {
+        $query_pairs = $this->uo->criteria($this->kind->getSplitField(), $this->idName);
+        $query_pairs->addArrays($pairs_list);
+        return $this->uo->query($query_pairs);
+    }
+
     private function invalidate($pairs) {
         if (! $this->idName) {
             $this->uo->invalidate($pairs[$this->kind->getSplitField()]);

@@ -20,4 +20,6 @@ interface KAL_FilterInterface {
     public function beforeDeleteOne(array $pairs);
 
     public function afterDeleteOne(array $pairs, $result);
+
+    public function findMulti(array $pairs_list);
 }

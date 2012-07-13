@@ -55,14 +55,19 @@ class KAL_Kind implements KAL_KindInterface {
     public function getFilters() {
         if (! $this->filters) {
             $this->filters = array();
-            foreach ($this->config["filters"] as $filter_config) {
-                list($name, $parameters) = $filter_config;
-                if (isset($this->filterNames[$name])) {
-                    throw new Exception('filter "'.$name.'" is used');
+            foreach ($this->config["filters"] as $filter) {
+                if (is_array($filter)) {
+                    list($class_name, $parameters) = $filter;
+                    if (isset($this->filterNames[$class_name])) {
+                        throw new Exception('filter "'.$name.'" is used');
+                    }
+                    $refl = new ReflectionClass($class_name);
+                    $filter = $refl->newInstanceArgs($parameters);
+                } else if (is_object($filter)) {
+                    $class_name = get_class($filter);
+                } else {
+                    throw new Exception('invalid filter data');
                 }
-                $this->filterNames[$name] = 1;
-                $refl = new ReflectionClass($name);
-                $filter = $refl->newInstanceArgs($parameters);
                 $filter->setKind($this);
                 $this->filters[] = $filter;
             }

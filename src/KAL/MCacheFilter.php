@@ -59,7 +59,7 @@ class KAL_MCacheFilter implements KAL_FilterInterface {
         $result = $this->mcache->get($mcache_key);
         if ($result && strlen($result)) {
             $result = unserialize($result);
-            if ($result instanceof DKXI_FRResult_Row) {
+            if ($result instanceof ArrayAccess) {
                 $this->cache[$proc_key] = $result;
                 return $result;
             }
@@ -87,6 +87,10 @@ class KAL_MCacheFilter implements KAL_FilterInterface {
         if ($result->affectedRowNum()) {
             $this->invalidate($pairs);
         }
+    }
+
+    public function findMulti(array $pairs_list) {
+        return false;
     }
 
     private function cacheNew($pairs, $result) {

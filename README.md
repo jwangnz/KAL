@@ -25,6 +25,5 @@ $row = $handle->findOne($user_id);
 ## 更多例子可以查看 tests/　下的脚本
 
 ## 目前问题
-- findMuli尚未实现
 - 测试不全
 
