@@ -19,7 +19,7 @@ require_once dirname(__FILE__)."/../src/autoload.php";
 
 $loader = new KAL_ConfigLoader();
 // 设置使用哪个DBMan
-$loader->setDBMan("kxm");
+$loader->setDBMan("frodo");
 // 设置分表字段的映射
 $loader->setSplitMap(array(
     "user" => "user_id",
@@ -36,9 +36,9 @@ $row = $handle->findOne(array(
     "site_id" => $site_id,
 ));
 
-$rows = $handle->setHintID($user_id)->find("%C in (%L)", "site_id", array(1, 2, 3));
+$rows = $handle->setHintID($user_id)->find("%C in (%Ld)", "site_id", array(1, 2, 3));
 
-$row = $handle->setHintID($user_id)->findColumns(array("user_id"), "%C in (%L)", "site_id", array(1, 2, 3));
+$row = $handle->setHintID($user_id)->findColumns(array("user_id"), "%C in (%Ld)", "site_id", array(1, 2, 3));
 
 $result = $handle->deleteOne(array(
     "user_id" => $user_id,
@@ -49,7 +49,6 @@ $update = array(
     "ctime" => date("Y-m-d H:i:s"),
 );
 $change = array(
-    "count" => 1,
 );
 $result = $handle->updateOne(array(
     "user_id" => $user_id,
