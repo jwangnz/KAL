@@ -15,7 +15,7 @@ $loader->setSplitMap(array(
 KAL_Factory::init($loader);
 
 $kind = KAL_Factory::getKind("motv_user_info");
-$field = array("KAL_ColumnIDGen", array("long", array("kind" => "motv_user_id", "idman" => "frodo")));
+$field = array("KAL_ColumnIDGen", array("motv_user_id", false, "frodo"));
 $kind->getConfig()->set("special_fields", array(
     "user_id" =>$field,
 ));
