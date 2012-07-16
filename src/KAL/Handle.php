@@ -271,7 +271,7 @@ class KAL_Handle implements KAL_HandleInterface {
         return $result;
     }
 
-    private function convertRow(ArrayAccess $row) {
+    private function convertRow(array $row) {
         $special_fields = $this->kind->getSpecialFields();
         foreach ($special_fields as $field_name => $handle) {
             if ($handle instanceof KAL_ColumnConverterInterface) {
